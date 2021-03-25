@@ -32,37 +32,79 @@ public class DomainModelTest {
     }
 
     @Test
-    void containerTest() {
+    void emptyContainerTest() {
         assertFalse(hall.contains(pupaCar));
+    }
+    @Test
+    void putThingToEmptyContainerTest() {
         hall.putThing(pupaCar);
         assertTrue(hall.contains(pupaCar));
+    }
+    @Test
+    void putThingTwiceToEmptyContainerTest() {
+        hall.putThing(pupaCar);
+        hall.putThing(pupaCar);
+        assertTrue(hall.contains(pupaCar));
+    }
+    @Test
+    void putThingTwiceToEmptyContainerAndExtractTest() {
+        hall.putThing(pupaCar);
         hall.putThing(pupaCar);
         hall.extractThing(pupaCar);
         assertFalse(hall.contains(pupaCar));
     }
+
     @Test
-    void containerSizingTest() {
-        assertFalse(hall.putThing(lupaCar));
+    void putLargeThingToMediumContainerTest() {
+        hall.putThing(lupaCar);
         assertFalse(hall.contains(lupaCar));
-        assertTrue(hall.putThing(pupaCar));
-        assertTrue(hall.contains(pupaCar));
-        assertTrue(hall.putThing(dupaCar));
-        assertTrue(hall.contains(dupaCar));
-        assertFalse(hall.putThing(car4));
-        assertFalse(hall.contains(car4));
     }
     @Test
-    void passengerTest() {
-        assertTrue(pupaCar.putPassenger(lupa));
-        assertEquals(pupaCar.getPassenger(),lupa);
-        assertFalse(pupaCar.putPassenger(pupa));
-        assertNotEquals(pupaCar.getPassenger(),pupa);
-        assertEquals(pupaCar.getPassenger(),lupa);
-        pupaCar.extractPassenger();
-        assertTrue(pupaCar.putPassenger(pupa));
-        assertEquals(pupaCar.getPassenger(),pupa);
-        assertNotEquals(pupaCar.getPassenger(),lupa);
+    void putLargeThingToMediumContainerThenSmallThingTest() {
+        hall.putThing(lupaCar);
+        hall.putThing(pupaCar);
+        assertTrue(hall.contains(pupaCar));
+    }
+    @Test
+    void putLargeThingToMediumContainerThenTwoSmallThingsTest() {
+        hall.putThing(lupaCar);
+        hall.putThing(pupaCar);
+        hall.putThing(dupaCar);
+        assertTrue(hall.contains(pupaCar)
+                && hall.contains(dupaCar)
+                && !hall.contains(lupaCar));
+    }
+    @Test
+    void putLargeThingToMediumContainerThenThreeSmallThingsTest() {
+        hall.putThing(lupaCar);
+        hall.putThing(pupaCar);
+        hall.putThing(dupaCar);
+        hall.putThing(car4);
+        assertTrue(hall.contains(pupaCar)
+                && hall.contains(dupaCar)
+                && !hall.contains(lupaCar)
+                && !hall.contains(car4));
+    }
 
+
+    @Test
+    void putPassengerInCarTest() {
+        pupaCar.putPassenger(lupa);
+        assertEquals(pupaCar.getPassenger(),lupa);
+    }
+    @Test
+    void putPassengerInCarThenTrySecondPassengerTest() {
+        pupaCar.putPassenger(lupa);
+        pupaCar.putPassenger(pupa);
+        assertEquals(pupaCar.getPassenger(),lupa);
+    }
+    @Test
+    void putPassengerInCarThenTrySecondPassengerThenExtractPassengerAndTryAgainTest() {
+        pupaCar.putPassenger(lupa);
+        pupaCar.putPassenger(pupa);
+        pupaCar.extractPassenger();
+        pupaCar.putPassenger(pupa);
+        assertEquals(pupaCar.getPassenger(),pupa);
     }
 
     @AfterEach

@@ -6,6 +6,8 @@ import part2.HeapSort;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class HeapSortTest {
@@ -13,6 +15,7 @@ public class HeapSortTest {
     final int MAX_ELEMENTS = 100;
     int[] array;
     int n;
+    int[] emptyArray = new int[0];
 //    @BeforeEach
 //    void setUp() {
 //        array = new int[]{0, -1, 4, 3, -20, -10, 2, 3, 24, 23};
@@ -92,6 +95,11 @@ public class HeapSortTest {
         for (int i = 1; i < n; i++) {
             assertTrue(array[i-1]<=array[i]);
         }
+    }
+    @Test()
+    void checkSortEmptyArray() {
+        HeapSort.sort(emptyArray);
+        assertEquals(emptyArray.length,0);
     }
     @AfterAll
     void tearDown() {
